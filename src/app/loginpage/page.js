@@ -39,7 +39,7 @@ export default function Login() {
                         className="object-cover object-center"
                     />
 
-                    <div className="absolute inset-0 from-black/90 via-black/15 to-black/5" />
+                    <div className="absolute inset-0" />
 
                     <Link href="/" className="absolute left-10 top-10 text-white">
                         <span className="block font-serif text-[2.2rem] leading-none tracking-[0.18em]">
