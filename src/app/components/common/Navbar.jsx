@@ -24,7 +24,7 @@ const wishlistItemCount = wishlistItems.length;
 
   return (
     <header>
-      <nav className=" top-0 left-0 w-full z-50 bg-white shadow-md px-6 py-4 flex items-center justify-between">
+     <nav className="relative w-full z-50 bg-white shadow-md px-6 py-4 flex items-center justify-between">
         {/* logo */}
         <div className='flex flex-col leading-tight'>
           <Link href="/">

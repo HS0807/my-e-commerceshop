@@ -1,145 +1,94 @@
 "use client";
 
-import { useSelector, useDispatch } from "react-redux";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/userSlice";
 import { useRouter } from "next/navigation";
-import { FaUser, FaEnvelope, FaPhoneAlt, FaBirthdayCake } from "react-icons/fa";
-import { BsGenderAmbiguous, BsBoxArrowRight } from "react-icons/bs";
 
 export default function Profile() {
-  const router = useRouter();
   const dispatch = useDispatch();
+  const router = useRouter();
 
-  // User from Redux (DummyJSON Login)
-  const reduxUser = useSelector((state) => state.user.currentUser);
-
-  // User from localStorage (Signup)
-  let localUser = null;
-
-  if (typeof window !== "undefined") {
-    localUser = JSON.parse(localStorage.getItem("signupUser"));
-  }
-
-  // Use Redux user first, otherwise localStorage user
-  const user = reduxUser || localUser;
+  const user = useSelector((state) => state.user.currentUser);
 
   const handleLogout = () => {
     dispatch(logout());
-    localStorage.removeItem("signupUser");
-    router.push("/login");
+    router.push("/loginpage");
   };
 
-  if (!user) {
-    return (
-      <div className="max-w-7xl mx-auto py-20 text-center">
-        <h1 className="text-3xl font-bold">
-          Please Login First
-        </h1>
-
-        <button
-          onClick={() => router.push("/loginpage")}
-          className="mt-6 bg-black text-white px-6 py-3 rounded-lg"
-        >
-          Go to Login
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className="max-w-6xl mx-auto px-5 py-12">
+  
+    !user ? (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold">
+            Please Login First
+          </h1>
 
-      <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
+          <Link
+            href="/loginpage"
+            className="inline-block mt-6 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800"
+          >
+            Back to Login
+          </Link>
+        </div>
+      </div>
+    ) : (
+      <div className="min-h-screen bg-gray-100 py-10 px-5">
+        <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg">
 
-        {/* Cover */}
-        <div className="h-40 bg-[#803f14]" />
+          {/* Top Banner */}
+          <div className="h-20 bg-black"></div>
 
-        {/* Profile */}
-        <div className="px-8 pb-10">
+          {/* Profile */}
+          <div className="px-8 pb-10">
 
-          <div className="-mt-16 flex flex-col md:flex-row md:items-center md:justify-between">
+            <div className="-mt-20">
+              <h1 className="text-xl font-bold text-white p-4">
+                {user.firstName} {user.lastName}
+              </h1>
+            </div>
 
-            <div className="flex items-center gap-5">
-
-              {user.image ? (
-                <img
-                  src={user.image}
-                  alt="Profile"
-                  className="w-32 h-32 rounded-full border-4 border-white object-cover"
-                />
-              ) : (
-                <div className="w-32 h-32 rounded-full border-4 border-white bg-gray-200 flex items-center justify-center">
-                  <FaUser className="text-5xl text-gray-600" />
-                </div>
-              )}
+            {/* User Details */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+              <div>
+                <p className="text-sm text-gray-500">Email</p>
+                <p className="font-semibold">{user.email}</p>
+              </div>
 
               <div>
-                <h1 className="text-3xl font-bold">
-                  {user.firstName
-                    ? `${user.firstName} ${user.lastName}`
-                    : user.fullName}
-                </h1>
+                <p className="text-sm text-gray-500">Phone</p>
+                <p className="font-semibold">91+ 9669188169</p>
+              </div>
 
-                <p className="text-gray-500">
-                  Welcome to Veloura
-                </p>
+              <div>
+                <p className="text-sm text-gray-500">Gender</p>
+                <p className="font-semibold">{user.gender}</p>
+              </div>
+
+              <div>
+                <p className="text-sm text-gray-500">Age</p>
+                <p className="font-semibold">21</p>
+              </div>
+
+              <div>
+                <p className="text-sm text-gray-500">Birth Date</p>
+                <p className="font-semibold">12-02-2006</p>
               </div>
             </div>
 
-            <button
-              onClick={handleLogout}
-              className="mt-6 md:mt-0 flex items-center gap-2 bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600"
-            >
-              <BsBoxArrowRight />
-              Logout
-            </button>
-
-          </div>
-
-          {/* Details */}
-          <div className="grid md:grid-cols-2 gap-6 mt-10">
-
-            <div className="border rounded-xl p-5">
-              <div className="flex items-center gap-3 mb-4">
-                <FaEnvelope />
-                <span className="font-medium">Email</span>
-              </div>
-
-              <p>{user.email}</p>
-            </div>
-
-            <div className="border rounded-xl p-5">
-              <div className="flex items-center gap-3 mb-4">
-                <FaPhoneAlt />
-                <span className="font-medium">Phone</span>
-              </div>
-
-              <p>{user.phone || "Not Available"}</p>
-            </div>
-
-            <div className="border rounded-xl p-5">
-              <div className="flex items-center gap-3 mb-4">
-                <BsGenderAmbiguous />
-                <span className="font-medium">Gender</span>
-              </div>
-
-              <p>{user.gender || "Not Available"}</p>
-            </div>
-
-            <div className="border rounded-xl p-5">
-              <div className="flex items-center gap-3 mb-4">
-                <FaBirthdayCake />
-                <span className="font-medium">Date of Birth</span>
-              </div>
-
-              <p>{user.birthDate || user.dob || "Not Available"}</p>
+            <div className="mt-10">
+              <button
+                onClick={handleLogout}
+                className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800"
+              >
+                Logout
+              </button>
             </div>
 
           </div>
-
         </div>
-
       </div>
-    </div>
-  );
+    )
+);
 }
