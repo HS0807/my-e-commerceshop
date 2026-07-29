@@ -52,11 +52,6 @@ const wishlistItemCount = wishlistItems.length;
                 New Arrivals
               </Link>
             </li>
-            <li>
-              <Link href="/products" className="text-[#be4444da]">
-                Top Seller
-              </Link>
-            </li>
           </ul>
         </div>
 
