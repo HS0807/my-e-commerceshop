@@ -26,12 +26,12 @@ export default function ProductCard({ product }) {
 };
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition duration-300">
-      <div className="relative h-60 bg-gray-100">
+    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl ">
+      <div className="relative h-64 bg-gray-100">
         <img
           src={product.thumbnail}
           alt={product.title}
-          className="w-full h-64 object-cover hover:scale-105 transition duration-300" />
+          className="w-full h-64 object-cover" />
         <button onClick={handleWishlist} className="absolute top-3 right-3 bg-white rounded-full p-2 shadow-md hover:scale-110 transition" >
           {isWishlisted ? (<FaHeart className="text-red-500 text-xl" />
           ) : (<FaRegHeart className="text-gray-600 text-xl" />)} </button>

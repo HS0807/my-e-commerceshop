@@ -13,7 +13,7 @@ export default async function Categorysection() {
 
 
           {/* category 1 */}
-          <div className="flex flex-col items-center justify-center shadow-md hover:shadow-2xl rounded-2xl transition-transform duration-400 hover:-translate-y-2 overflow-hidden ">
+          <div className="flex flex-col items-center justify-center shadow-md hover:shadow-2xl rounded-2xl transition-transform duration-300 hover:-translate-y-2 overflow-hidden ">
             <Image
               src="/assets/category1.png"
               alt="Men"

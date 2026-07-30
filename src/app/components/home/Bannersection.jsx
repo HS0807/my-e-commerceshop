@@ -2,7 +2,6 @@
 import Image from "next/image";
 import React from 'react'
 import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa";
 
 export default function BannerSection() {
     return (
@@ -16,7 +15,7 @@ export default function BannerSection() {
                     className="w-full  h-72 sm:h-96 md:h-[500px] lg:h-[600px] object-cover" />
             </div>
 
-            <div className="absolute inset-0 mx-auto flex max-w-7xl items-center justify-center lg:justify-start px-6 py-10 lg:px-12">
+            <div className="absolute inset-0 flex max-w-7xl items-center justify-center lg:justify-start px-6 py-10 lg:px-12">
                 <div className="w-full max-w-xl px-4 sm:px-6 lg:px-8">
                     <p className="mb-4 text-sm uppercase text-amber-200">
                         N e w C o l l e c t i o n
