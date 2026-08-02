@@ -8,15 +8,11 @@ const cartSlice = createSlice({
     reducers: {
         addToCart: (state, action) => {
             console.log("Reducer called");
+            console.log("Payload:", action.payload);
 
-            const item = action.payload;
-            const existingItem = state.items.find((i) => i.id === item.id);
+            state.items.push(action.payload);
 
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                state.items.push({ ...item, quantity: 1 });
-            }
+            console.log("Updated Cart:", state.items);
         },
 
         removeFromCart: (state, action) => {

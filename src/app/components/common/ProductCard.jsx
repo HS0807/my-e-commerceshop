@@ -3,7 +3,8 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { addTowishlist, removefromwishlist } from "@/app/redux/slices/wishlistSlice";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { addToCart } from "@/app/redux/slices/cartSlice";
+// import { addToCart } from "@/app/redux/slices/cartSlice";
+
 
 export default function ProductCard({ product }) {
 
@@ -20,10 +21,36 @@ export default function ProductCard({ product }) {
     }
   };
 
- const handleAddToCart = () => {
-  console.log(product);
-  dispatch(addToCart(product));
-};
+  const auth = useSelector((state) => state.auth.currentUser);
+
+  const handleAddToCart = async () => {
+    if (!auth) {
+      alert("Please Login First");
+      return;
+    }
+
+    const response = await fetch("https://dummyjson.com/carts/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: auth.id,
+        products: [
+          {
+            id: product.id,
+            quantity: 1,
+          },
+        ],
+      }),
+    });
+
+    const data = await response.json();
+    console.log("Cart Added:", data);
+    alert("Product Added to Cart");
+  };
+
+  
 
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl ">
@@ -56,7 +83,7 @@ export default function ProductCard({ product }) {
             </button>
           </Link>
 
-          <button onClick={handleAddToCart}  className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
+          <button onClick={handleAddToCart} className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
             Add to Cart
           </button>
         </div>

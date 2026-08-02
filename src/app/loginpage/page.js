@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { FaRegEye, FaRegEyeSlash, FaRegUser } from 'react-icons/fa'
 import { RiLock2Line } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
-import { loginSuccess } from '../redux/slices/userSlice'
+import { loginSuccess } from '../redux/slices/authSlice'
 import { useRouter } from "next/navigation";
 
 export default function Login() {
@@ -32,12 +32,20 @@ export default function Login() {
 
         const data = await response.json();
         if (response.ok) {
-            dispatch(loginSuccess(data));
+            const { id, accessToken, refreshToken } = data;
+            dispatch(loginSuccess({
+                id,
+                accessToken,
+                refreshToken,
+            })
+            );
             router.push("/profile");
         } else {
             alert(data.message || "Login Failed");
         }
     };
+
+
 
     return (
         <main className="min-h-screen bg-white text-zinc-950">
@@ -50,9 +58,9 @@ export default function Login() {
                         width={800}
                         height={800}
                         priority
-                        className="h-full w-full object-center" 
-                        />
-                        
+                        className="h-full w-full object-center"
+                    />
+
                     <Link href="/" className="absolute left-10 top-10 text-white">
                         <span className="block font-serif text-[2.2rem] leading-none">
                             V E L O U R A

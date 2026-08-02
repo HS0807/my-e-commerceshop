@@ -1,19 +1,93 @@
 "use client";
 
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+// import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import { BsHandbag, BsTrash, BsPlus, BsDash } from "react-icons/bs";
-import { removeFromCart, updateQuantity, } from "../redux/slices/cartSlice";
+// import { removeFromCart, updateQuantity, } from "../redux/slices/cartSlice"; // comment 
 
 export default function Cart() {
 
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
+  // const dispatch = useDispatch(); // comment 
+  const auth = useSelector((state) => state.auth.currentUser);
+  // const cartItems = useSelector((state) => state.cart.items);  // comment 
+  const [cartItems, setCartItems] = useState([]);
+  const [cartId, setCartId] = useState(null);
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
 
+  useEffect(() => {
+    console.log("Cart Page Opened");
+
+    const fetchCart = async () => {
+      console.log("Fetching Cart...");
+
+      const response = await fetch(
+        `https://dummyjson.com/carts/user/${auth.id}`
+      );
+
+      const data = await response.json();
+
+      console.log(data);
+
+      if (data.carts.length > 0) {
+        setCartId(data.carts[0].id);
+        setCartItems(data.carts[0].products);
+      } else {
+        setCartId(null);
+        setCartItems([]);
+      }
+    };
+
+    if (auth) {
+      fetchCart();
+    }
+  }, [auth]);
+
+  const updateQuantity = async (productId, quantity) => {
+    const response = await fetch(`https://dummyjson.com/carts/${cartId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          merge: true,
+          products: [
+            {
+              id: productId,
+              quantity: quantity,
+            },
+          ],
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    setCartItems(data.products);
+  };
+
+  console.log(cartItems);
+
+  const removeFromCart = async () => {
+    const response = await fetch(
+      `https://dummyjson.com/carts/${cartId}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    const data = await response.json();
+    console.log(data);
+
+    setCartItems([]);
+    setCartId(null);
+
+    alert("Cart Deleted Successfully");
+  };
   return (
     <div className="w-full max-w-7xl mx-auto my-12 px-4">
       {/* Heading */}
@@ -46,11 +120,11 @@ export default function Cart() {
             <div className="space-y-6">
               {cartItems.map((item) => (
                 <div key={item.id} className="bg-white rounded-lg shadow-md p-5 flex flex-col sm:flex-row gap-5">
-                  <img
+                  {/* <img
                     src={item.thumbnail}
                     alt={item.title}
                     className="w-40 h-40 object-cover rounded"
-                  />
+                  /> */}
                   <div className="flex-1">
                     <h2 className="text-xl font-semibold">
                       {item.title}
@@ -59,31 +133,30 @@ export default function Cart() {
                       ${item.price}
                     </p>
                     <div className="flex items-center gap-3 mt-5">
-                      <button onClick={() => dispatch(updateQuantity({
-                        id: item.id, quantity: item.quantity - 1,
-                      }))
-                      }
-                        className="border p-2 rounded" > <BsDash />
+                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="border p-2 rounded">
+                        <BsPlus />
                       </button>
                       <span className="font-semibold">
                         {item.quantity}
                       </span>
-                      <button onClick={() => dispatch( updateQuantity({
-                              id: item.id,
-                              quantity: item.quantity + 1,
-                            })
-                          )
-                        }
-                        className="border p-2 rounded">
-                        <BsPlus />
+                      {/* 
+                      <button onClick={() => dispatch(updateQuantity({id: item.id, quantity: item.quantity + 1,}))}>
+                       <BsPlus />
+                       </button>
+                       */}
+                      <button onClick={() => {   if (item.quantity > 1) { updateQuantity(item.id, item.quantity - 1)}  }} className="border p-2 rounded">
+                        <BsDash />
                       </button>
                     </div>
                   </div>
-                  <button
+                  {/* <button
                     onClick={() =>
                       dispatch(removeFromCart(item.id))
-                    }
+                    }   // comment 
                     className="text-red-500 text-2xl self-start">
+                    <BsTrash />
+                  </button> */}
+                  <button onClick={removeFromCart} className="text-red-500 text-2xl self-start">
                     <BsTrash />
                   </button>
                 </div>
