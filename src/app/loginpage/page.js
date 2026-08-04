@@ -1,5 +1,6 @@
 'use client'
 
+import Cookies from "js-cookie";
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -33,13 +34,19 @@ export default function Login() {
         const data = await response.json();
         if (response.ok) {
             const { id, accessToken, refreshToken } = data;
-            dispatch(loginSuccess({
-                id,
-                accessToken,
-                refreshToken,
-            })
+            Cookies.set("accessToken", accessToken, { expires: 7 });
+            Cookies.set("refreshToken", refreshToken, { expires: 7 });
+
+            dispatch(
+                loginSuccess({
+                    id,
+                    accessToken,
+                    refreshToken,
+                })
             );
+
             router.push("/profile");
+
         } else {
             alert(data.message || "Login Failed");
         }

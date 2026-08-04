@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react'
-import { FaSearch, FaHeart, FaShoppingCart, FaUser, FaTimes, FaBars } from 'react-icons/fa'
+import { FaHeart, FaShoppingCart, FaUser, FaTimes, FaBars } from 'react-icons/fa'
 import { useSelector } from 'react-redux';
 
 export default function Navbar() {

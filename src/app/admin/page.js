@@ -1,8 +1,22 @@
 "use client";
 
+import { logout } from "../redux/slices/authSlice";
 import {FaUsers,FaBoxOpen,FaShoppingCart,FaThLarge,FaHome,FaSignOutAlt,} from "react-icons/fa";
 
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+
 export default function AdminDashboard() {
+
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    router.push("/");
+  };
+
+
     return (
         <div className="min-h-screen bg-gray-100 flex">
             {/* Sidebar */}
@@ -33,7 +47,7 @@ export default function AdminDashboard() {
                     </div>
                 </div>
                 <div className="mt-auto">
-                    <button className="w-full bg-red-500 hover:bg-red-600 py-3 rounded-lg flex justify-center items-center gap-3">
+                    <button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 py-3 rounded-lg flex justify-center items-center gap-3">
                         <FaSignOutAlt />
                         Logout
                     </button>
@@ -48,7 +62,7 @@ export default function AdminDashboard() {
                             Dashboard
                         </h1>
                         <p className="text-gray-500 mt-2">
-                            Welcome back Admin 
+                            Welcome back Admin
                         </p>
                     </div>
                 </div>

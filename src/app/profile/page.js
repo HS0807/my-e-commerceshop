@@ -9,9 +9,7 @@ import { useEffect, useState } from "react";
 export default function Profile() {
   const dispatch = useDispatch();
   const router = useRouter();
-
   const auth = useSelector((state) => state.auth.currentUser);
-
   const [user, setUser] = useState(null);
 
   useEffect(() => {
