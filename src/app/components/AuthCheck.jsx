@@ -38,13 +38,6 @@ export default function AuthCheck() {
         };
         checkUser();
     }, [dispatch]);
-  return (
-    <div>
-      <div className="fixed inset-0 flex items-center justify-center bg-white">
-                <p className="text-xl font-semibold">
-                    Loading...
-                </p>
-            </div>
-    </div>
-  )
+
+    return null; // This component doesn't render anything
 }
