@@ -1,12 +1,14 @@
 "use client";
 
-import Link from 'next/link';
-import React, { useState } from 'react'
-import { FaHeart, FaShoppingCart, FaUser, FaTimes, FaBars } from 'react-icons/fa'
-import { useSelector } from 'react-redux';
+import Cookies from "js-cookie";
+import Link from "next/link";
+import React, { useState } from "react";
+import { FaHeart, FaShoppingCart, FaUser, FaTimes, FaBars } from "react-icons/fa";
+import {  useSelector } from "react-redux";
 
 export default function Navbar() {
 
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 

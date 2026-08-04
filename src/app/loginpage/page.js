@@ -39,12 +39,9 @@ export default function Login() {
 
             dispatch(
                 loginSuccess({
-                    id,
-                    accessToken,
-                    refreshToken,
+                    ...data,
                 })
             );
-
             router.push("/profile");
 
         } else {

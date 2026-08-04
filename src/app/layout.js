@@ -2,6 +2,7 @@ import "./globals.css";
 import ReduxProvider from "./components/ReduxProvider";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
+import AuthCheck from "./components/AuthCheck";
 
 
 
@@ -19,6 +20,9 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <ReduxProvider>
 
+          <AuthCheck />
+
+          
           <Navbar/>
           {children}
           <Footer/>
