@@ -1,5 +1,6 @@
 "use client";
 
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/authSlice";
@@ -28,7 +29,11 @@ export default function Profile() {
   }, [auth]);
 
   const handleLogout = () => {
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
+
     dispatch(logout());
+
     router.push("/loginpage");
   };
 
