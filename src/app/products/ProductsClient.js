@@ -37,15 +37,12 @@ export default function ProductsClient({
   }, [search, sort]);
 
   const [isFilterModelOpen, setIsFilterModelOpen] = useState(false);
-
   const [filters, setFilters] = useState({
     category: [],
     priceRanges: [],
     availability: [],
     discount: [],
   });
-
-  
 
   const handleFilterChange = (filterType, value) => {
     setFilters((prev) => ({

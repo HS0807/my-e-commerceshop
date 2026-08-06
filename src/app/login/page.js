@@ -38,12 +38,9 @@ export default function Login() {
             Cookies.set("refreshToken", refreshToken, { expires: 7 });
 
             dispatch(
-                loginSuccess({
-                    ...data,
-                })
+                loginSuccess({...data,})
             );
             router.push("/profile");
-
         } else {
             alert(data.message || "Login Failed");
         }

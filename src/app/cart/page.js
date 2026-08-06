@@ -20,18 +20,9 @@ export default function Cart() {
   );
 
   useEffect(() => {
-    console.log("Cart Page Opened");
-
     const fetchCart = async () => {
-      console.log("Fetching Cart...");
-
-      const response = await fetch(
-        `https://dummyjson.com/carts/user/${auth.id}`
-      );
-
+      const response = await fetch(`https://dummyjson.com/carts/user/${auth.id}`);
       const data = await response.json();
-
-      console.log(data);
 
       if (data.carts.length > 0) {
         setCartId(data.carts[0].id);
@@ -66,23 +57,17 @@ export default function Cart() {
       }
     );
     const data = await response.json();
-    console.log(data);
     setCartItems(data.products);
   };
 
-  console.log(cartItems);
-
   const removeFromCart = async () => {
-    const response = await fetch(
-      `https://dummyjson.com/carts/${cartId}`,
+    const response = await fetch(`https://dummyjson.com/carts/${cartId}`,
       {
         method: "DELETE",
       }
     );
 
     const data = await response.json();
-    console.log(data);
-
     setCartItems([]);
     setCartId(null);
 

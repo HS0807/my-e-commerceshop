@@ -34,7 +34,7 @@ export default function Profile() {
 
     dispatch(logout());
 
-    router.push("/loginpage");
+    router.push("/login");
   };
 
   // User not logged in
@@ -47,7 +47,7 @@ export default function Profile() {
           </h1>
 
           <Link
-            href="/loginpage"
+            href="/login"
             className="inline-block mt-6 bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800"
           >
             Back to Login
