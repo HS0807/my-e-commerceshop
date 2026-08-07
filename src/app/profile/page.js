@@ -53,15 +53,6 @@ export default function ProfilePage() {
   return (
     <section className="bg-[#fafafa] min-h-screen">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
-
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-gray-500 mb-10">
-          <IoHomeOutline />
-          <span>Home</span>
-          <MdKeyboardArrowRight />
-          <span className="text-[#B8860B] font-medium">My Profile</span>
-        </div>
-
         {/* Profile Header */}
         <div className="bg-white rounded-2xl shadow-sm p-8 flex flex-col lg:flex-row lg:justify-between lg:items-center">
           {/* Left Side */}
