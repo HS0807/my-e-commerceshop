@@ -56,7 +56,7 @@ export default function Navbar() {
             </li>
 
             <li>
-              <Link href="/loginpage" className="">
+              <Link href="/login" className="">
                 Login
               </Link>
             </li>

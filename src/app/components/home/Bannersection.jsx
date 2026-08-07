@@ -28,7 +28,7 @@ export default function BannerSection() {
                     </p>
 
                     <div className="flex flex-wrap gap-4">
-                        <Link href="/loginpage"  className="inline-flex items-center gap-2 rounded-full border-2 border-white px-6 py-3 text-sm font-semibold uppercase text-white transition hover:bg-white hover:text-black">
+                        <Link href="/login"  className="inline-flex items-center gap-2 rounded-full border-2 border-white px-6 py-3 text-sm font-semibold uppercase text-white transition hover:bg-white hover:text-black">
                             Login
                         </Link>
                     </div>
