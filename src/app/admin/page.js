@@ -70,13 +70,8 @@ export default function AdminDashboard() {
                         <FaBoxOpen /> <p>Products</p>
                     </div>
 
-                    {/* Carts */}
-                    <div onClick={() => router.push("/admin/cart")} className="flex items-center gap-4 hover:bg-gray-800 p-4 rounded-lg cursor-pointer">
-                        <FaShoppingCart /> <p>Carts</p>
-                    </div>
-
                     {/* Categories */}
-                    <div onClick={() => router.push("/admin/categories")} className="flex items-center gap-4 hover:bg-gray-800 p-4 rounded-lg cursor-pointer">
+                    <div className="flex items-center gap-4 hover:bg-gray-800 p-4 rounded-lg cursor-pointer">
                         <FaThLarge /> <p>Categories</p>
                     </div>
 
@@ -102,7 +97,7 @@ export default function AdminDashboard() {
                     </div>
                 </div>
                 {/* Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-15">
                     <div className="bg-white rounded-xl shadow-md p-6">
                         <FaUsers className="text-4xl text-blue-500 mb-4" />
                         <p className="text-gray-500">Total Users</p>
@@ -112,11 +107,6 @@ export default function AdminDashboard() {
                         <FaBoxOpen className="text-4xl text-green-500 mb-4" />
                         <p className="text-gray-500">Products</p>
                         <h2 className="text-3xl font-bold mt-2">{productsCount}</h2>
-                    </div>
-                    <div className="bg-white rounded-xl shadow-md p-6">
-                        <FaShoppingCart className="text-4xl text-orange-500 mb-4" />
-                        <p className="text-gray-500">Carts</p>
-                        <h2 className="text-3xl font-bold mt-2">{cartsCount}</h2>
                     </div>
                     <div className="bg-white rounded-xl shadow-md p-6">
                         <FaThLarge className="text-4xl text-purple-500 mb-4" />

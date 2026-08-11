@@ -5,6 +5,7 @@ import { FaUsers, FaBoxOpen, FaShoppingCart, FaThLarge, FaHome, FaSignOutAlt, Fa
 import { useDispatch } from "react-redux";
 import { logout } from "@/app/redux/slices/authSlice";
 import { useRouter } from "next/navigation";
+
 export default function AdminUsers() {
 
     const dispatch = useDispatch();
@@ -169,34 +170,33 @@ export default function AdminUsers() {
 
     return (
         <div className="min-h-screen bg-[#f5f5f5] flex">
-            {/* ================= SIDEBAR ================= */}
-            <div className="w-64 bg-[#111111] text-white p-5 flex flex-col">
-                <div className="mb-10">
-                    <h1 className="text-2xl font-bold">VELOURA</h1>
-                    <p className="text-xs text-gray-400 mt-1">ADMIN PANEL</p>
+            {/* Sidebar */}
+            <div className="w-72 bg-black text-white p-6 flex flex-col">
+                 <div className="mb-10">
+                    <h1 className="text-2xl lg:text-3xl font-bold">Admin Panel</h1>
+                    <p className="text-gray-400 text-sm mt-2">Manage Users</p>
                 </div>
-                <div className="space-y-2">
-                    <div
-                        onClick={() => router.push("/admin")}
-                        className="flex items-center gap-3 p-3 rounded-lg hover:bg-white hover:text-black cursor-pointer">
-                        <FaHome /> <span>Dashboard</span>
+                <div className="space-y-3">
+
+                    {/* Dashboard */}
+                    <div onClick={() => router.push("/admin")} className="flex items-center gap-4 bg-white text-black p-4 rounded-lg cursor-pointer">
+                        <FaHome /> <p>Dashboard</p>
                     </div>
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-white text-black cursor-pointer">
-                        <FaUsers /> <span>Users</span>
+
+                    {/* Users */}
+                    <div onClick={() => router.push("/admin/users")} className="flex items-center gap-4 hover:bg-gray-800 p-4 rounded-lg cursor-pointer">
+                        <FaUsers /> <p>Users</p>
                     </div>
-                    <div onClick={() => router.push("/admin/products")} className="flex items-center gap-3 p-3 rounded-lg hover:bg-white hover:text-black cursor-pointer">
-                        <FaBoxOpen /> <span>Products</span>
-                    </div>
-                    <div onClick={() => router.push("/admin/carts")} className="flex items-center gap-3 p-3 rounded-lg hover:bg-white hover:text-black cursor-pointer">
-                        <FaShoppingCart /> <span>Carts</span>
-                    </div>
-                    <div onClick={() => router.push("/admin/categories")} className="flex items-center gap-3 p-3 rounded-lg hover:bg-white hover:text-black cursor-pointer">
-                        <FaThLarge /> <span>Categories</span>
+
+                    {/* Products */}
+                    <div onClick={() => router.push("/admin/products")} className="flex items-center gap-4 hover:bg-gray-800 p-4 rounded-lg cursor-pointer">
+                        <FaBoxOpen /> <p>Products</p>
                     </div>
                 </div>
                 <div className="mt-auto">
-                    <button onClick={handleLogout} className="w-full flex items-center justify-center gap-3 bg-red-500 hover:bg-red-600 p-3 rounded-lg">
-                        <FaSignOutAlt /> <span>Logout</span>
+                    <button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 py-3 rounded-lg flex justify-center items-center gap-3">
+                        <FaSignOutAlt />
+                        Logout
                     </button>
                 </div>
             </div>
@@ -215,7 +215,7 @@ export default function AdminUsers() {
                 </div>
 
                 {/* SEARCH */}
-                <div className="bg-white p-4 rounded-xl shadow-sm mb-6">
+                <div className="rounded-xl mb-6">
                     <div className="relative">
                         <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                         <input
@@ -231,11 +231,7 @@ export default function AdminUsers() {
                 {/* USER COUNT */}
                 <div className="flex items-center justify-between mb-5">
                     <p className="text-gray-500">
-                        Showing{" "}
-                        <span className="font-semibold text-black">
-                            {filteredUsers.length}
-                        </span>{" "}
-                        users
+                        Showing {filteredUsers.length} users
                     </p>
                 </div>
 
@@ -245,11 +241,6 @@ export default function AdminUsers() {
                         <div key={user.id} className="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition flex items-center justify-between">
                             {/* USER INFO */}
                             <div className="flex items-center gap-5">
-                                <img
-                                    src={user.image}
-                                    alt={user.firstName}
-                                    className="w-14 h-14 rounded-full object-cover"
-                                />
                                 <div>
                                     <h2 className="font-semibold text-lg">{user.firstName}{" "}{user.lastName}</h2>
                                     <p className="text-sm text-gray-500"> @{user.username}</p>
