@@ -50,8 +50,6 @@ export default function ProductCard({ product }) {
     alert("Product Added to Cart");
   };
 
-  
-
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl ">
       <div className="relative h-64 bg-gray-100">

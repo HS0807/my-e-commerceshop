@@ -129,7 +129,7 @@ export default function Cart() {
                        <BsPlus />
                        </button>
                        */}
-                      <button onClick={() => {   if (item.quantity > 1) { updateQuantity(item.id, item.quantity - 1)}  }} className="border p-2 rounded">
+                      <button onClick={() => { if (item.quantity > 1) { updateQuantity(item.id, item.quantity - 1) } }} className="border p-2 rounded">
                         <BsDash />
                       </button>
                     </div>
@@ -164,9 +164,9 @@ export default function Cart() {
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
             </div>
-            <button className="w-full mt-6 bg-black text-white py-3 rounded-lg hover:bg-gray-800">
+            <Link href="/billing" className="block w-full mt-6 bg-black text-white py-3 rounded-lg hover:bg-gray-800 text-center">
               Proceed to Checkout
-            </button>
+            </Link>
           </div>
         </div>
       </div>

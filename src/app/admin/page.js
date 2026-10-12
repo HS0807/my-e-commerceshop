@@ -1,7 +1,7 @@
 "use client";
 
 import { logout } from "../redux/slices/authSlice";
-import { FaUsers, FaBoxOpen, FaShoppingCart, FaThLarge, FaHome, FaSignOutAlt, } from "react-icons/fa";
+import { FaUsers, FaBoxOpen, FaThLarge, FaHome, FaSignOutAlt, } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -12,8 +12,8 @@ export default function AdminDashboard() {
     const router = useRouter();
     const [usersCount, setUsersCount] = useState(0);
     const [productsCount, setProductsCount] = useState(0);
-    const [cartsCount, setCartsCount] = useState(0);
     const [categoriesCount, setCategoriesCount] = useState(0);
+    
 
     const handleLogout = () => {
         dispatch(logout());
@@ -26,17 +26,14 @@ export default function AdminDashboard() {
                 const [usersResponse, productsResponse, cartsResponse, categoriesResponse,] = await Promise.all([
                     fetch("https://dummyjson.com/users"),
                     fetch("https://dummyjson.com/products"),
-                    fetch("https://dummyjson.com/carts"),
                     fetch("https://dummyjson.com/products/categories"),
                 ]);
                 const usersData = await usersResponse.json();
                 const productsData = await productsResponse.json();
-                const cartsData = await cartsResponse.json();
                 const categoriesData = await categoriesResponse.json();
 
                 setUsersCount(usersData.total);
                 setProductsCount(productsData.total);
-                setCartsCount(cartsData.total);
                 setCategoriesCount(categoriesData.length);
             } catch (error) {
                 console.log("Dashboard API Error:", error);
@@ -74,7 +71,6 @@ export default function AdminDashboard() {
                     <div className="flex items-center gap-4 hover:bg-gray-800 p-4 rounded-lg cursor-pointer">
                         <FaThLarge /> <p>Categories</p>
                     </div>
-
                 </div>
                 <div className="mt-auto">
                     <button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 py-3 rounded-lg flex justify-center items-center gap-3">
@@ -97,7 +93,7 @@ export default function AdminDashboard() {
                     </div>
                 </div>
                 {/* Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-15">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-15">
                     <div className="bg-white rounded-xl shadow-md p-6">
                         <FaUsers className="text-4xl text-blue-500 mb-4" />
                         <p className="text-gray-500">Total Users</p>
@@ -112,6 +108,11 @@ export default function AdminDashboard() {
                         <FaThLarge className="text-4xl text-purple-500 mb-4" />
                         <p className="text-gray-500">Categories</p>
                         <h2 className="text-3xl font-bold mt-2">{categoriesCount}</h2>
+                    </div>
+                    <div className="bg-white rounded-xl shadow-md p-6">
+                        <FaThLarge className="text-4xl text-orange-500 mb-4" />
+                        <p className="text-gray-500">Total Orders</p>
+                        <h2 className="text-3xl font-bold mt-2">0</h2>
                     </div>
                 </div>
                 {/* Tables */}
