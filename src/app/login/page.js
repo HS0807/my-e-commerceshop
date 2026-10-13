@@ -30,6 +30,18 @@ export default function Login() {
         setError("");
 
         try {
+            // Admin Login
+            if (
+                username.trim() === "hitesh" &&
+                password === "hitesh0807"
+            ) {
+                Cookies.set("isAdmin", "true", { expires: 7 });
+
+                router.push("/admin");
+                return;
+            }
+
+            // Regular User Login
             const response = await fetch(
                 "https://dummyjson.com/auth/login",
                 {
@@ -38,7 +50,7 @@ export default function Login() {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({
-                        username,
+                        username: username.trim(),
                         password,
                     }),
                 }
@@ -47,18 +59,34 @@ export default function Login() {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || "Login failed");
+                throw new Error(
+                    data.message || "Invalid username or password"
+                );
             }
 
             const { accessToken, refreshToken } = data;
 
-            Cookies.set("accessToken", accessToken, { expires: 7 });
-            Cookies.set("refreshToken", refreshToken, { expires: 7 });
+            Cookies.set("accessToken", accessToken, {
+                expires: 7,
+                sameSite: "Lax",
+            });
+
+            Cookies.set("refreshToken", refreshToken, {
+                expires: 7,
+                sameSite: "Lax",
+            });
+
+            // Remove admin status when a regular user logs in
+            Cookies.remove("isAdmin");
 
             dispatch(loginSuccess(data));
+
             router.push("/profile");
         } catch (err) {
-            setError(err.message || "Something went wrong. Please try again.");
+            setError(
+                err.message ||
+                    "Something went wrong. Please try again."
+            );
         } finally {
             setLoading(false);
         }
@@ -67,6 +95,7 @@ export default function Login() {
     return (
         <main className="min-h-screen bg-white text-zinc-950">
             <div className="grid min-h-screen lg:grid-cols-2">
+
                 {/* Left Section */}
                 <div className="relative h-64 overflow-hidden sm:h-80 lg:h-screen">
                     <Image
@@ -97,24 +126,29 @@ export default function Login() {
                         </h2>
 
                         <p className="mt-2 max-w-sm text-sm leading-6 text-white/95 sm:text-base sm:leading-7 xl:text-lg">
-                            Login to continue exploring premium fashion, exclusive
-                            collections and your personalized shopping experience.
+                            Login to continue exploring premium fashion,
+                            exclusive collections and your personalized
+                            shopping experience.
                         </p>
                     </div>
                 </div>
+
                 {/* Right Section */}
                 <section className="flex min-h-screen items-center justify-center px-5 py-10 sm:px-8 md:px-12 lg:px-8 xl:px-14">
                     <div className="w-full max-w-md">
+
                         {/* Mobile Logo */}
                         <Link href="/" className="mb-10 block lg:hidden">
                             <span className="block font-serif text-2xl sm:text-3xl">
                                 V E L O U R A
                             </span>
+
                             <span className="mt-2 block text-xs font-semibold tracking-[0.25em] text-zinc-600">
                                 STYLE THAT DEFINES YOU
                             </span>
                         </Link>
 
+                        {/* Heading */}
                         <div className="mb-8 sm:mb-10">
                             <h1 className="text-3xl font-bold sm:text-4xl">
                                 Welcome Back
@@ -125,7 +159,11 @@ export default function Login() {
                             </p>
                         </div>
 
-                        <form className="space-y-6 sm:space-y-7" onSubmit={handleLogin}>
+                        {/* Login Form */}
+                        <form
+                            className="space-y-6 sm:space-y-7"
+                            onSubmit={handleLogin}
+                        >
                             {/* Username */}
                             <div>
                                 <label
@@ -143,7 +181,9 @@ export default function Login() {
                                         type="text"
                                         autoComplete="username"
                                         value={username}
-                                        onChange={(e) => setUsername(e.target.value)}
+                                        onChange={(e) =>
+                                            setUsername(e.target.value)
+                                        }
                                         placeholder="Enter your username"
                                         className="h-12 w-full rounded-lg border border-zinc-300 py-3 pl-12 pr-4 text-sm transition placeholder:text-zinc-500 focus:border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 sm:h-14"
                                         required
@@ -165,10 +205,14 @@ export default function Login() {
 
                                     <input
                                         id="password"
-                                        type={showPassword ? "text" : "password"}
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
                                         autoComplete="current-password"
                                         value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        onChange={(e) =>
+                                            setPassword(e.target.value)
+                                        }
                                         placeholder="Enter your password"
                                         className="h-12 w-full rounded-lg border border-zinc-300 py-3 pl-12 pr-12 text-sm transition placeholder:text-zinc-500 focus:border-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-900 sm:h-14"
                                         required
@@ -176,18 +220,31 @@ export default function Login() {
 
                                     <button
                                         type="button"
-                                        onClick={() => setShowPassword((prev) => !prev)}
-                                        aria-label={showPassword ? "Hide password" : "Show password"}
+                                        onClick={() =>
+                                            setShowPassword((prev) => !prev)
+                                        }
+                                        aria-label={
+                                            showPassword
+                                                ? "Hide password"
+                                                : "Show password"
+                                        }
                                         className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-900"
                                     >
-                                        {showPassword ? <FaRegEyeSlash /> : <FaRegEye />}
+                                        {showPassword ? (
+                                            <FaRegEyeSlash />
+                                        ) : (
+                                            <FaRegEye />
+                                        )}
                                     </button>
                                 </div>
                             </div>
 
                             {/* Error Message */}
                             {error && (
-                                <p className="text-sm text-red-600" role="alert">
+                                <p
+                                    className="text-sm text-red-600"
+                                    role="alert"
+                                >
                                     {error}
                                 </p>
                             )}
